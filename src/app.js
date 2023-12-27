@@ -8,7 +8,7 @@ const cors = require("cors");
 const swaggerUi = require("swagger-ui-express");
 const swaggerJSDoc = require("swagger-jsdoc");
 const { initializeRoutes } = require("./routes");
-const errorHandler = require("./utils/errorHandler");
+const { errorHandler } = require("./utils/errorHandler");
 
 const app = express();
 
@@ -72,7 +72,7 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 initializeRoutes(app);
 
 // Error Handling Middleware
-app.use((err, req, res, next) => {
+app.use((err, req, res) => {
   errorHandler(res, err.message, err.status || 500);
 });
 

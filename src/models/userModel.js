@@ -13,14 +13,11 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  tokens: [
-    {
-      token: {
-        type: String,
-        required: true,
-      },
-    },
-  ],
+
+  token: {
+    type: String,
+    required: true,
+  },
 });
 
 // Hash the user's password before saving it to the database
@@ -37,9 +34,8 @@ userSchema.pre("save", async function (next) {
 // Generate JWT token for authentication
 userSchema.methods.generateAuthToken = async function () {
   const user = this;
-  const token = jwt.sign({ _id: user._id.toString() }, process.env.JWT_SECRET);
-  user.tokens = user.tokens.concat({ token });
-  return token;
+  user.token = jwt.sign({ _id: user._id.toString() }, process.env.JWT_SECRET);
+  return user.save();
 };
 
 const User = mongoose.model("User", userSchema);

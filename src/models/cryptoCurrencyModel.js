@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 
 const cryptoCurrencySchema = new mongoose.Schema({
-  name: {
+  symbol: {
     type: String,
     required: true,
     unique: true,

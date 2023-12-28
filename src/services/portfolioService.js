@@ -4,18 +4,18 @@ const Cryptocurrency = require("../models/cryptoCurrencyModel");
 
 const addPortfolioEntry = async (
   userId,
-  cryptoCurrencyName,
+  cryptoCurrencySymbol,
   quantity,
   decimals = 0
 ) => {
   try {
     let cryptocurrency = await Cryptocurrency.findOne({
-      cryptoCurrencyName,
+      cryptoCurrencySymbol,
     });
 
     if (!cryptocurrency) {
       const newCryptocurrency = new Cryptocurrency({
-        name: cryptoCurrencyName,
+        symbol: cryptoCurrencySymbol,
         decimals,
       });
       cryptocurrency = await newCryptocurrency.save();
@@ -32,10 +32,10 @@ const addPortfolioEntry = async (
   }
 };
 
-const updatePortfolioEntry = async (userId, cryptoCurrencyName, quantity) => {
+const updatePortfolioEntry = async (userId, cryptoCurrencySymbol, quantity) => {
   try {
     const cryptoCurrency = await Cryptocurrency.findOne({
-      name: cryptoCurrencyName,
+      symbol: cryptoCurrencySymbol,
     });
 
     if (!cryptoCurrency) {
@@ -56,10 +56,10 @@ const updatePortfolioEntry = async (userId, cryptoCurrencyName, quantity) => {
   }
 };
 
-const deletePortfolioEntry = async (userId, cryptoCurrencyName) => {
+const deletePortfolioEntry = async (userId, cryptoCurrencySymbol) => {
   try {
     const cryptoCurrency = await Cryptocurrency.findOne({
-      name: cryptoCurrencyName,
+      symbol: cryptoCurrencySymbol,
     });
 
     if (!cryptoCurrency) {
@@ -92,7 +92,7 @@ const getPortfolio = async (userId) => {
       {
         $project: {
           _id: 0,
-          cryptocurrencyName: "$cryptocurrencies.name",
+          cryptocurrencySymbol: "$cryptocurrencies.symbol",
           quantity: 1,
           cryptocurrencyDecimals: "$cryptocurrencies.decimals",
         },

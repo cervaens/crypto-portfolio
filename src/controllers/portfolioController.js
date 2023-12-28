@@ -9,12 +9,12 @@ const {
 
 exports.addToPortfolio = async (req, res) => {
   try {
-    const { cryptoCurrencyName, quantity, decimals } = req.body;
+    const { cryptoCurrencySymbol, quantity, decimals } = req.body;
     const userId = req.user._id;
 
     const updatedPortfolio = await addPortfolioEntry(
       userId,
-      cryptoCurrencyName,
+      cryptoCurrencySymbol,
       quantity,
       decimals
     );
@@ -30,12 +30,12 @@ exports.addToPortfolio = async (req, res) => {
 
 exports.updatePortfolio = async (req, res) => {
   try {
-    const { cryptoCurrencyName, quantity } = req.body;
+    const { cryptoCurrencySymbol, quantity } = req.body;
     const userId = req.user._id;
 
     const updatedPortfolio = await updatePortfolioEntry(
       userId,
-      cryptoCurrencyName,
+      cryptoCurrencySymbol,
       quantity
     );
 
@@ -50,12 +50,12 @@ exports.updatePortfolio = async (req, res) => {
 
 exports.deleteCryptocurrency = async (req, res) => {
   try {
-    const { cryptoCurrencyName } = req.body;
+    const { cryptoCurrencySymbol } = req.body;
     const userId = req.user._id;
 
     const updatedPortfolio = await deletePortfolioEntry(
       userId,
-      cryptoCurrencyName
+      cryptoCurrencySymbol
     );
 
     res.status(201).json({

@@ -1,85 +1,159 @@
-# crypto-portfolio
+# Crypto Portfolio API
 
-# Crypto Portfolio Management API
+This is a simple Node.js application for managing a cryptocurrency portfolio. It includes RESTful API endpoints for user registration, portfolio management, and simulated cryptocurrency transactions.
 
-## Overview
+## Deployment with Docker Compose
 
-This Node.js application serves as an API for managing cryptocurrency portfolios. It allows users to perform various operations such as adding, updating, and deleting cryptocurrencies in their portfolio. Additionally, users can simulate buying and selling transactions for cryptocurrencies.
+To deploy the application using Docker Compose:
 
-## Features
+1.  Clone the repository:
+    `git clone https://github.com/cervaens/crypto-portfolio.git`
 
-- **User Authentication**: Secure user registration and authentication with JWT (JSON Web Tokens).
-- **Portfolio Management**: Add, update, and delete cryptocurrencies in the portfolio.
-- **Transaction Simulation**: Simulate buying and selling transactions for cryptocurrencies.
-- **Rate Limiting**: Implemented rate limiting to protect against abuse and ensure high traffic handling.
-- **Security Features**: Input validation, CORS handling, and basic error handling for enhanced security.
-- **Swagger Documentation**: API documentation using Swagger for easy exploration and testing.
-- **MongoDB Database**: Utilizes MongoDB as the database to store user and portfolio information.
+2.  Change into the project directory:
+    `cd crypto-portfolio-api`
+3.  Create a \`.env\` file from file example.env and change the vars accordingly, although only an infura key is needed to add all other vars can be kept as they are.
 
-## Project Structure
+4.  Run Docker Compose:
 
-├── controllers/
-│ ├── portfolioController.js # Controllers for portfolio-related operations
-│ └── transactionController.js # Controllers for transaction-related operations
-├── middleware/
-│ ├── authMiddleware.js # JWT authentication middleware
-│ └── validationMiddleware.js # Request validation middleware
-├── models/
-│ └── userModel.js # MongoDB model for user data
-├── routes/
-│ ├── portfolioRoutes.js # API routes for portfolio management
-│ └── transactionRoutes.js # API routes for transaction simulation
-├── utils/
-│ ├── errorHandler.js # Error handling utility
-│ └── swaggerSetup.js # Swagger setup and configuration
-├── .env.example # Example environment variables
-├── app.js # Express application setup
-├── package.json # Node.js project configuration
-├── README.md # Project documentation
-└── .eslintrc.js # ESLint configuration
+    docker-compose up --build
 
-## Getting Started
+The application will be accessible at [http://localhost:3000](http://localhost:3000).
 
-1. **Clone the Repository:**
+### Notes
 
-   ```bash
-   git clone https://github.com/your-username/crypto-portfolio-api.git
-   cd crypto-portfolio-api
+- An API key from infura is needed.
 
-    Install Dependencies:
+- The only supported tokens are MATIC and ETH. Others can be easily added.
 
-    bash
-   ```
+- Chainlink aggregator is being used as price oracle. Prices are used to determine the amount of a token when buying/selling other tokens.
 
-npm install
+- Validation is done in one endpoint as an example, other endpoints should have validiotn in prod.
 
-Set Up Environment Variables:
+- tests are not in place but should be before deploying to prod.
 
-Create a .env file based on the provided .env.example and update the variables accordingly.
+- auth is a simple jwt that is replaced everytime there's a login. Passwords for login are open so https should be used in prod.
 
-Start the Server:
+- cors and rate limitation are basically implemented.
 
-bash
+- basic docker-compose was built.
 
-    npm start
+## API Endpoints
 
-    The API will be accessible at http://localhost:3000.
+### User Registration
 
-API Documentation
+**Endpoint:** POST /api/user/register
 
-Explore and test the API using the Swagger documentation:
+**Description:** Register a new user.
 
-    Swagger UI: http://localhost:3000/api-docs
+**Request Body:**
 
-Contributing
+    {
+      "username": "your-username",
+      "password": "your-password"
+    }
 
-Feel free to contribute to this project by opening issues or submitting pull requests. Ensure that you follow the Contributing Guidelines.
-License
+### User Login
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+**Endpoint:** POST /api/user/login
 
-vbnet
+**Description:** Log in with a registered user.
 
-Make sure to replace placeholder information like `your-username` with your actual GitHub username and update any specific details related to your application. Additionally, customize the installation and usage instructions based on your project's requirements.
+**Request Body:**
 
-Need to add that password goes unamsked so we should use https
+    {
+      "username": "your-username",
+      "password": "your-password"
+    }
+
+**Response:**
+
+    {
+      "user": {
+        "_id": "user-id",
+        "username": "your-username"
+      },
+      "token": "your-jwt-token"
+    }
+
+### Portfolio Management
+
+**Endpoint:** POST /api/portfolio/add
+
+**Description:** Add a new entry to the portfolio.
+
+**Request Body:**
+
+    {
+      "cryptoCurrencySymbol": "string",
+      "quantity": "string",
+      "decimals": 0
+    }
+
+**Endpoint:** POST /api/portfolio/delete
+
+**Description:** Delete a new entry to the portfolio.
+
+**Request Body:**
+
+    {
+    "cryptoCurrencySymbol": "string",
+    }
+
+**Endpoint:** POST /api/portfolio/update
+
+**Description:** Update an entry in the portfolio.
+
+**Request Body:**
+
+    {
+    "cryptoCurrencySymbol": "string",
+    "quantity": "string"
+    }
+
+**Endpoint:** GET /api/portfolio/state
+
+**Description:** Retrieve the current portfolio state.
+
+### Simulated Cryptocurrency Transactions
+
+**Endpoint:** POST /api/transaction/buy
+
+**Description:** Simulate buying cryptocurrency.
+
+**Request Body:**
+
+    {
+    "buyCryptoCurrencySymbol": "string",
+    "buyCryptoCurrencyDecimals": "string",
+    "buyQuantity": "string",
+    "sellCryptoCurrencySymbol": "string"
+    }
+
+**Endpoint:** POST /api/transaction/sell
+
+**Description:** Simulate selling cryptocurrency.
+
+**Request Body:**
+
+    {
+    "sellCryptoCurrencySymbol": "string",
+    "sellQuantity": "string",
+    "buyCryptoCurrencySymbol": "string",
+    "buyCryptoCurrencyDecimals": "string"
+    }
+
+### API Documentation
+
+API documentation is available at /api-docs. For example, if running locally, visit:
+
+    http://localhost:3000/api-docs
+
+This documentation provides details on available endpoints, request bodies, and response formats.
+
+### Contributing
+
+Contributions are welcome! Please follow the Contributing Guidelines.
+
+### License
+
+This project is licensed under the MIT License.

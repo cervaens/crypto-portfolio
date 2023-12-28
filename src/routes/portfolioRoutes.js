@@ -30,14 +30,14 @@ router.use(authMiddleware.authenticateUser);
  *           schema:
  *             type: object
  *             properties:
- *               cryptoCurrencyName:
+ *               cryptoCurrencySymbol:
  *                 type: string
  *               quantity:
  *                 type: string
  *               decimals:
  *                 type: number
  *             required:
- *               - cryptoCurrencyName
+ *               - cryptoCurrencySymbol
  *               - quantity
  *     responses:
  *       201:
@@ -70,12 +70,12 @@ router.post(
  *           schema:
  *             type: object
  *             properties:
- *               cryptoCurrencyName:
+ *               cryptoCurrencySymbol:
  *                 type: string
  *               quantity:
  *                 type: string
  *             required:
- *               - cryptoCurrencyName
+ *               - cryptoCurrencySymbol
  *               - quantity
  *     responses:
  *       200:
@@ -108,10 +108,10 @@ router.put(
  *           schema:
  *             type: object
  *             properties:
- *               cryptoCurrencyName:
+ *               cryptoCurrencySymbol:
  *                 type: string
  *             required:
- *               - cryptoCurrencyName
+ *               - cryptoCurrencySymbol
  *     responses:
  *       200:
  *         description: Cryptocurrency deleted successfully

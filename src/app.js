@@ -12,15 +12,20 @@ const { errorHandler } = require("./utils/errorHandler");
 
 const app = express();
 
+// Middleware
+const corsOptions = {
+  origin: "http://localhost:3000",
+  methods: "GET,HEAD,PUT,POST,DELETE",
+  optionsSuccessStatus: 204,
+};
+app.use(cors(corsOptions));
+app.use(bodyParser.json());
+
 // Connect to MongoDB
 mongoose.connect(`mongodb://${process.env.DB_HOST}/${process.env.DB_NAME}`, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });
-
-// Middleware
-app.use(bodyParser.json());
-app.use(cors());
 
 // Rate Limiting Middleware
 const limiter = rateLimit({

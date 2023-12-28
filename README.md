@@ -41,7 +41,7 @@ The application will be accessible at [http://localhost:3000](http://localhost:3
 
 ### User Registration
 
-**Endpoint:** POST /api/user/register
+**Endpoint:** POST /api/register
 
 **Description:** Register a new user.
 
@@ -54,7 +54,7 @@ The application will be accessible at [http://localhost:3000](http://localhost:3
 
 ### User Login
 
-**Endpoint:** POST /api/user/login
+**Endpoint:** POST /api/login
 
 **Description:** Log in with a registered user.
 

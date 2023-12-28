@@ -23,7 +23,7 @@ The application will be accessible at [http://localhost:3000](http://localhost:3
 
 - An API key from infura is needed.
 
-- The only supported tokens are MATIC and ETH. Others can be easily added.
+- The only supported tokens are MATIC and ETH in Ethereum mainnet. Others can be easily added.
 
 - Chainlink aggregator is being used as price oracle. Prices are used to determine the amount of a token when buying/selling other tokens.
 

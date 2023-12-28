@@ -11,7 +11,7 @@ To deploy the application using Docker Compose:
 
 2.  Change into the project directory:
     `cd crypto-portfolio-api`
-3.  Create a \`.env\` file from file example.env and change the vars accordingly, although only an infura key is needed to add all other vars can be kept as they are.
+3.  Create a \`.env\` file from file example.env and change the vars accordingly, although only an infura key is needed to add. All other vars can be kept as they are.
 
 4.  Run Docker Compose:
 
